@@ -1,0 +1,26 @@
+title: "AIがYouTube動画を全自動生成する仕組みを作った──Remotion × VOICEVOX × 10種APIで月〇本投稿を実現する"
+summary: |
+  「動画を作り続けること」がYouTube収益化の最大のボトルネック。
+  本書では、台本生成・音声合成・動画レンダリング・アップロードを
+  すべて自動化するシステムの全設計と実装コードを公開します。
+  副業・FIRE志望者が「仕組みを作って寝ている間に稼ぐ」を実現するための
+  完全ガイドです。
+
+topics:
+  - youtube
+  - nodejs
+  - automation
+  - python
+  - voicevox
+
+published: false
+price: 4980
+
+chapters:
+  - chapter1
+  - chapter2
+  - chapter7
+  - chapter3
+  - chapter4
+  - chapter5
+  - chapter6

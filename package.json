@@ -1,0 +1,10 @@
+{
+  "name": "ai-youtube-auto-book",
+  "version": "1.0.0",
+  "scripts": {
+    "preview": "zenn preview"
+  },
+  "devDependencies": {
+    "zenn-cli": "^0.1.161"
+  }
+}
