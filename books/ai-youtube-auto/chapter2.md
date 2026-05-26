@@ -108,10 +108,11 @@ AIに台本を作らせます。本書付属のシステムでは、
 
 ```javascript
 // 台本データの例（DialogueScene.tsx 内）
+// char の値は channel.config.json の characters キーと一致させる
 const SCRIPT_LINES = [
-  { id: 'scene1_01', char: 'neko', emotion: 'explaining',
+  { id: 'scene1_01', char: 'char_a', emotion: 'explaining',
     text: 'NISAって知ってる？', speakText: 'ニーサって知ってる？' },
-  { id: 'scene1_02', char: 'kenta', emotion: 'neutral',
+  { id: 'scene1_02', char: 'char_b', emotion: 'neutral',
     text: '聞いたことはあるけど……', speakText: '聞いたことはあるけど……' },
 ];
 ```

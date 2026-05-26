@@ -11,47 +11,46 @@ title: "カスタマイズ──自分のチャンネルに合わせた改造ガ
 
 ## カスタマイズ 1：キャラクターを変える
 
+すべてのキャラクター設定は `channel.config.json` に集約されています。
+このファイルだけ編集すれば、コードを一切触らずにキャラを変更できます。
+
 ### 画像の差し替え
 
-キャラクター画像は `AIエージェント/public/` に置きます。
+1. キャラクター画像を `AIエージェント/public/` に置く
+2. `channel.config.json` の `emotions` にファイル名を登録する
 
-```
-AIエージェント/public/
-├── kenta-neutral.png     ← ケンタ（通常）
-├── kenta-excited.png     ← ケンタ（驚き）
-├── kenta-shock.png       ← ケンタ（ショック）
-├── kenta-smile.png       ← ケンタ（笑顔）
-├── kenta-sad.png         ← ケンタ（悲しみ）
-├── nekomimi-neutral.png  ← 猫耳先生（通常）
-└── nekomimi-explaining.png ← 猫耳先生（解説）
-...
-```
-
-**独自のキャラクター画像に差し替えたい場合:**
-1. 同名ファイルを作成して `public/` に置く（上書き）
-2. 別名にしたい場合は `src/characterAssets.ts` のマッピングを更新
-
-```typescript
-// characterAssets.ts
-export const CHARACTER_ASSETS = {
-  kenta: {
-    neutral: 'あなたのキャラ-neutral.png',  // ← ファイル名を変更
-    excited: 'あなたのキャラ-excited.png',
-    // ...
+```json
+{
+  "characters": {
+    "char_a": {
+      "label": "あなたのキャラ名",
+      "emotions": {
+        "neutral":    "mychar-neutral.png",
+        "explaining": "mychar-explaining.png",
+        "smug":       "mychar-smug.png"
+      },
+      "fallback": "mychar-neutral.png"
+    }
   }
-};
+}
 ```
+
+:::message
+画像は必ず `AIエージェント/public/` 直下に置いてください。
+サブフォルダに入れると表示されません。
+:::
 
 ### VOICEVOXの声を変える
 
-`tools/generate-audio.mjs` の `SPEAKER_ID` を変更します。
+`channel.config.json` の `voicevoxId` を変更するだけです。
 
-```javascript
-// generate-audio.mjs
-const SPEAKER_ID = {
-  neko: 3,   // ← ずんだもん（ノーマル）
-  kenta: 12, // ← 白上虎太郎（ふつう）
-};
+```json
+{
+  "characters": {
+    "char_a": { "voicevoxId": 3  },
+    "char_b": { "voicevoxId": 12 }
+  }
+}
 ```
 
 VOICEVOXで使える話者IDを確認するには：
@@ -60,7 +59,7 @@ VOICEVOXで使える話者IDを確認するには：
 curl http://localhost:50021/speakers | python -m json.tool | grep -E '"name"|"id"'
 ```
 
-好きな話者のIDを `SPEAKER_ID` に設定してください。
+好きな話者のIDを `voicevoxId` に設定してください。
 
 ---
 
@@ -108,26 +107,44 @@ export async function fetchData(query) {
 
 ### 背景画像の変更
 
-```typescript
-// DialogueScene.tsx
-const BACKGROUND = staticFile('WhiteBoard.png');  // ← 画像を差し替え
+`channel.config.json` の `theme.background` を変更します。
+
+```json
+{
+  "theme": {
+    "background": "MyBackground.png"
+  }
+}
 ```
 
-差し替えた画像を `AIエージェント/public/` に置いて、ファイル名を変更するだけです。
+差し替えた画像を `AIエージェント/public/` に置いて、ファイル名を設定するだけです。
 
 ### キャラクターサイズの変更
 
-```typescript
-const CHAR_H = 1150;  // ← ピクセル数（大きくするとキャラが大きくなる）
+`channel.config.json` の `theme.charHeight` を変更します。
+
+```json
+{
+  "theme": {
+    "charHeight": 1150
+  }
+}
 ```
 
 ### 字幕の色・スタイル変更
 
-```typescript
-// 字幕バーの色
-const SUBTITLE_BORDER = '#fbbf24';   // ゴールドボーダー
-const NEKO_BADGE_COLOR = '#7c3aed';  // 猫耳先生バッジ
-const KENTA_BADGE_COLOR = '#1d4ed8'; // ケンタバッジ
+`channel.config.json` の `theme` と各キャラの `badgeColor` で変更できます。
+
+```json
+{
+  "characters": {
+    "char_a": { "badgeColor": "#7c3aed" },
+    "char_b": { "badgeColor": "#1d4ed8" }
+  },
+  "theme": {
+    "subtitleBorder": "#fbbf24"
+  }
+}
 ```
 
 ---
